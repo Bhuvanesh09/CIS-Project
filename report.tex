@@ -1,0 +1,283 @@
+\documentclass[12pt]{article}%
+\usepackage{amsfonts}
+\usepackage{subcaption}
+\usepackage{listings}
+\usepackage{comment}
+\usepackage{color}
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\graphicspath{ {./Images/} }
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.0cm, right=2.0cm]%
+{geometry}
+\usepackage{times}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\usepackage{changepage}
+\usepackage{amssymb}
+\usepackage{graphicx}%
+\setcounter{MaxMatrixCols}{30}
+\newtheorem{theorem}{Theorem}
+\newtheorem{acknowledgement}[theorem]{Acknowledgement}
+\newtheorem{algorithm}[theorem]{Algorithm}
+\newtheorem{axiom}{Axiom}
+\newtheorem{case}[theorem]{Case}
+\newtheorem{claim}[theorem]{Claim}
+\newtheorem{conclusion}[theorem]{Conclusion}
+\newtheorem{condition}[theorem]{Condition}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{criterion}[theorem]{Criterion}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{exercise}[theorem]{Exercise}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{notation}[theorem]{Notation}
+\newtheorem{problem}[theorem]{Problem}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{solution}[theorem]{Solution}
+\newtheorem{summary}[theorem]{Summary}
+\newenvironment{proof}[1][Proof]{\textbf{#1.} }{\ \rule{0.5em}{0.5em}}
+
+\newcommand{\Q}{\mathbb{Q}}
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+
+\begin{document}
+
+\begin{titlepage} % Suppresses displaying the page number on the title page and the subsequent page counts as page 1
+	\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for horizontal lines, change thickness here
+	
+	\center % Centre everything on the page
+	
+	%------------------------------------------------
+	%	Headings
+	%------------------------------------------------
+	
+	\textsc{\LARGE IIIT Hyderabad}\\[1.5cm] % Main heading such as the name of your university/college
+	
+	\textsc{\Large Project Report}\\[0.5cm] % Major heading such as course name
+	
+	%\textsc{\large Minor Heading}\\[0.5cm] % Minor heading such as course title
+	
+	%------------------------------------------------
+	%	Title
+	%------------------------------------------------
+	
+	\HRule\\[0.4cm]
+	
+	{\huge\bfseries Creating a model of ML ready Database for predicting Protein-Ligand Binding}\\[0.4cm] % Title of your document
+	
+	\HRule\\[1.5cm]
+	
+	%------------------------------------------------
+	%	Author(s)
+	%------------------------------------------------
+	
+	\begin{minipage}{0.55\textwidth}
+		\begin{flushleft}
+			\large
+			\textit{Author}\\
+			 	\textsc{Bhuvanesh Sridharan (2018113002)} \\
+			 	\textsc{Kalp Shah Jayesh (2018113003)} % Your name
+		\end{flushleft}
+	\end{minipage}
+	~
+	\begin{minipage}{0.4\textwidth}
+		\begin{flushright}
+			\large
+			%\textit{Supervisor}\\
+			%Dr. Caroline \textsc{Becker} % Supervisor's name
+		\end{flushright}
+	\end{minipage}
+	
+	% If you don't want a supervisor, uncomment the two lines below and comment the code above
+	%{\large\textit{Author}}\\
+	%John \textsc{Smith} % Your name
+	
+	%------------------------------------------------
+	%	Date
+	%------------------------------------------------
+	
+	\vfill\vfill\vfill % Position the date 3/4 down the remaining page
+	
+	{\large December 3, 2018} % Date, change the \today to a set date if you want to be precise
+	
+	%------------------------------------------------
+	%	Logo
+	%------------------------------------------------
+	
+	%\vfill\vfill
+	%\includegraphics[width=0.2\textwidth]{placeholder.jpg}\\[1cm] % Include a department/university logo - this will require the graphicx package
+	 
+	%----------------------------------------------------------------------------------------
+	
+	\vfill % Push the date up 1/4 of the remaining page
+	
+\end{titlepage}
+\newpage
+\tableofcontents
+\newpage
+
+
+
+\begin{center}
+\section*{Acknowledgement}
+\end{center}
+\addcontentsline{toc}{section}{Acknowledgement}
+
+\vspace{10mm}
+
+\begin{center}
+The success and final outcome of this project required a lot of support and assistance from many people and we are extremely privileged to have got this all along the completion of our project. All that we have done is only due to such supervision and assistance and we would not forget to thank them. \\
+\vspace{10mm}
+
+First and foremost , We would like to thank our professor Prof. U Deva Priyakumar for giving us the opportunity to take up such a hands on and heuristic project and guiding us when and wherever necessary. His belief in us has instilled a confidence in us without which it would not have been possible to complete this project. \\ 
+\vspace{10mm	}
+We would like to thank our TA, Vineeth Chellur for guiding us through the process of downloading environments and packages of python which was of great help.
+Further, We would like to thank our friends and roommate for staying up all night and giving us company even though their exams had ended.
+\end{center}
+
+\newpage
+
+
+\section{Abstract and Inspiration}
+
+The basic idea of this project was conceived in one of our CIS Labs in which we were trying to find out all the non-bonding interactions between  Ligands and Protein in a particular Ligand-Protein Complex. That led us to asking ourself if knowing all the non bonding interaction in a particular ligand , protein pair would allow us to determine if they will bind to each other or not. \\
+We see that binding of a ligand to the protein requires a specific arrangement of attractive or repulsive forces alligned perfectly in a certain way to lower the energy of the entire system.\\
+That need of a certain specific arrangement has led us to believe that a solution using Machine Learning Algorithms would be very efficient in making predictions about Protein-Ligand Binding.
+Since Ligand binding to a protein is a problem similar to solving a 3-Dimentional puzzle, which is an $NP Complete$ problem in itself, it is indeed intuitive to feel that ML Algorithms involving decision trees and Neural Networks (like NEAT) would give us quantifiably good results.
+\\\\
+This project aims at inventing a method to get abundant data which would be absolutely necessary in implementing any of the above Machine Learning algorithms.\\
+ 
+
+As soon as we begin wondering on this problem , it is not long before we see that charecterising and indexing all the non bonding interaction in a complex in itself is a major task. 
+
+\section{Background}
+There have been many recent efforts to try to predict and classify protein-ligand binding. However, this has
+not led to any method of designing ligands to attach to specific proteins of interest. \\
+In addition to this, to determine the possibility of a ligand/molecule binding to a protein by non-bonding
+interactions by running a production simulation in Molecular Dynamics software tool would take up a lot
+of computational power and time.
+
+A paper published in NCBI in 2007 , titled as \\ \href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2008766/}{\emph{Setting up a large set of protein-ligand PDB complexes for the development and validation of knowledge-based docking algorithms}} \\ aims at making a database of all simple protein ligand complexes and their interaction but such a database would have too much of redundant and unnecessary data for our task and goal.  \\
+
+In 2015 , a free research tool called as PLIP(\emph{Protein Ligand INteraction Profiler}) was developed by \\ \begin{center}
+\emph{Biotechnology Center (BIOTEC), TU Dresden, Tatzberg 47-49, 01307 Dresden, Germany}
+\end{center} 
+which takes in the .pdb file as an input and uses its algorithms to profile all the non bonding interactions it can identify and outputs an \emph{xml} file which contains information about the non bonding interaction and their parameters like bond length , force constant et cetera. \\
+
+We will be using the above tool in our project at various stages to create an effective model.
+
+\newpage
+
+\section{Methodology}
+
+We are essentially creating a model in which there is a data (\emph{.dat}) file,  having the crucial and sufficient data which should be enough to determine if a ligand would bind to a protein or not.
+
+\subsection{The Model} 
+Our model consists of a $n\times n \times n$ matrix, encompassing the 3-Dimentional space around the ligand  and its interactions. The coordinates of the atom and the space around it, of the ligand which binds to the protein is highlighted in our model and thus that space has a scalar value called as \emph{STRENGTH}.
+Now the value of the scalar strength and the the radius around the atom depends on how strong the interaction is and thus decides how important that non bonding interaction is in determining the binding of the ligand and the complex.
+
+\subsection{Extracting data from the \emph{pdb} file}
+
+We use PYTHON scripting to accomplish our task. We use the following \emph{libraries:} \\
+
+\begin{itemize}
+\item[*] NUMPY : for using python arrays and data handling
+\item[*] MATPLOTLIB : to help us visualize the data we generate]
+\item[*] OS : to get info about the current directory and manipulate data files
+
+\end{itemize}
+The pdb file contains the coordinates of the atoms in the ligands with the primary Record name being HETATM.
+And the sites where these atoms bind to the protein are in the SITE Record Name.
+
+\subsection{Using the PLIP tool:}
+
+The PLIP tool takes in .pdb file as an input and outputs an \emph{xml} file having all the data about non bonding interactions in various tags. We need to extract this data from the xml data file and pass it through our function to determine the strength scalar for the coordinates of grid. \\
+\\
+We need another library in pyhton to extract this data. : \textbf{import xml.etree.ElementTree as ET} \\
+An example of determining the strength scalar for Hydrogen Bonding is given below:
+\[ Strength = 1/(distA +distB) \]	
+Where \emph{distA} is the distance between Hydrogen and the first electronegative atom and \emph{distB} is the distance between Hydrogen and the second electronegative atom.
+
+Now this value is scaled to a certain value range by multiplying it with a constant.
+Since PLIP is an opensource tool written in python itself , it is quite easy and convenient to incorporate it in our script so that the script would require just the pdb file to be given as input.
+
+\newpage
+
+\section{Results and Discussion:}
+
+We have successfully implemented a script in which we give an input of a Protein Ligand complex and pass the ligand to be modelled as an argument. The Script returns a \emph{.csv}(comma separated values) having the coordinates of the ligand atoms and their strength values. \\
+We also get a 3-Dimentional plot of the space around a ligand which has the atoms of the ligand plotted in  red and their size represents the strength scalar. \\
+
+\begin{Large}
+Note:
+\end{Large}
+\begin{itemize}
+\item In these illustrations we consider Hydrogen Bonding Interactions alone:
+
+\item The link to the GitHub repository where the scripts can be found is given at the end. \\
+
+Lets try the script on three different Protein-Ligand Complexes:
+\end{itemize}
+\subsection{2XNI 's TR8}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.9]{Figure_4.png}
+\end{figure}			
+\newpage
+\subsection{2BAW 's VCA}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{Figure_3.png}
+\end{figure}			
+
+\subsection{2BAW 's B7G}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{Figure_2.png}
+\end{figure}
+
+Since the complex \emph{2BAW} has more than 1 ligand which has Hydrogen Bonding, it is necessary to provide the argument of the ligand as well.
+\newpage
+\subsection{2BRN 's DF1}
+\begin{figure}[h]
+\centering
+\includegraphics[scale=0.7]{Figure_1.png}
+\end{figure}			
+			
+			
+As far as visual representation is concerned , we can expand the script to display other interactions like \emph{Hydrophobic Contact} , \emph{Dipole Dipole Interactions }, \emph{$\pi$ Stacking} et cetera quite easily by simple colour coding their strengths. \\
+
+Now , we admit that this model is not perfected and would require a bit of tweaking when the ML algorithm is actually implemented as different kind of non-bonding interactions have different amount of $\Delta E$ values, they would have a different amount of contribution in determining whether the ligand and protein would bind or not. \\
+Also, the constant determining the \emph{STRENGTH}  scalar will have to be tweaked by trial and error to get more accurate results. \\
+We also anticipate that this model and process of work might have a lower recall. This is because our system searches for interaction footprint similar to what it has already seen , a complex maybe be stable because of interactions in a completely different manner. Inspite of this , we are confident that this would have high precision and accuracy because once it has a recognised a footprint which already works, there is no particular effect which would not let the ligand to bind to the protein since non bonding interactions are the primary reasons for the stability of the complex.
+ \newpage
+\subsection*{Future Prospects:}
+\begin{figure}[h]
+\centering
+\includegraphics[width=\textwidth]{future.png}
+\end{figure}
+
+\section*{Bibliography}
+\addcontentsline{toc}{section}{Bibliography}
+\vspace{10mm}
+\begin{itemize}
+\item[$\gg$]\href{https://github.com/Bhuvanesh09/CIS-Project/}{GitHub Repository of the script: https://github.com/Bhuvanesh09/CIS-Project/}
+
+\item[$\gg$]\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4489249/}{Protein Ligand Interaction Profiler Article on NCBI : https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4489249/}
+
+\item[$\gg$]\href{http://plip.biotec.tu-dresden.de/plip-web/plip/index}{Protein Ligand Interaction Profiler Tool Webpage : http://plip.biotec.tu-dresden.de/plip-web/plip/index}
+
+\item[$\gg$]\href{https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2008766/}{Setting up a large set of protein-ligand PDB complexes for the development and validation of knowledge-based docking algorithms}
+
+\item[$\gg$]\href{https://www.rcsb.org/}{RCSB Source of all the pdb files: https://www.rcsb.org/}
+\end{itemize}
+
+
+
+\end{document}
+           
+            
